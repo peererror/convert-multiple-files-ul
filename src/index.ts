@@ -21,6 +21,7 @@ export const convertWordFiles = async (pathFile: string, extOutput: string, outp
     if (system === 'linux') { child_process.execSync(convertCommandLinux).toString('utf8') }
     if (system === 'win32') { child_process.execSync(convertCommandWindows).toString('utf8') }
   } catch (e) {
+    console.error('convertWordFiles:', e);
     throw new Error('Error converting the file');
   }
 
