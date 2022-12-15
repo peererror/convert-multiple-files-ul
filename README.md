@@ -19,12 +19,12 @@ all | base64
 
 ### Install
 
-`npm i convert-multiple-files`
+`npm i convert-multiple-files-ul`
 
 ### Convert Word files
 
 ```javascript
-import { convertWordFiles } from 'convert-multiple-files';
+import { convertWordFiles } from 'convert-multiple-files-ul';
 import * as path from 'path';
 
 async test() {
@@ -39,7 +39,7 @@ test();
 ### Convert DOCX to HTML
 
 ```javascript
-import { convertWordFileToHTML } from 'convert-multiple-files';
+import { convertWordFileToHTML } from 'convert-multiple-files-ul';
 import * as path from 'path';
 
 async test() {
@@ -54,7 +54,7 @@ test();
 ### Convert all files to Base64
 
 ```javascript
-import { convertToBase64 } from 'convert-multiple-files';
+import { convertToBase64 } from 'convert-multiple-files-ul';
 import * as path from 'path';
 
 async test() {

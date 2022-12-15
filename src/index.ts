@@ -1,7 +1,5 @@
 import * as path from 'path';
 import * as child_process from 'child_process';
-import * as mammoth from 'mammoth-style';
-import * as fs from 'fs';
 
 export const convertWordFiles = async (pathFile: string, extOutput: string, outputDir: string): Promise<string> => {
   const system = process.platform;
@@ -26,37 +24,4 @@ export const convertWordFiles = async (pathFile: string, extOutput: string, outp
   }
 
   return path.join(outputDir, `${fileName}.${extOutput}`);
-}
-
-export const convertWordFileToHTML = async (pathFile: string, outputDir: string, outputPrefix: string) => {
-  try {
-    const { value: contentHTML } = await mammoth.convertToHtml({ path: pathFile });
-    if (!contentHTML) return;
-
-    if (contentHTML.search('<p>') === 0) {
-      const titleTags = contentHTML.substring(0, contentHTML.indexOf('</p>') + 4);
-      let alignTitle = titleTags.replace(/<p>/g, '<center>');
-      alignTitle = alignTitle.replace(/<\/p>/g, '</center>');
-      
-      const newContentHTML = contentHTML.replace(titleTags, alignTitle)
-      fs.writeFileSync(path.resolve(outputDir, `${outputPrefix}.html`), newContentHTML);
-      return {
-        output: `${path.resolve(outputDir, `${outputPrefix}.html`)}`
-      };
-    }
-    
-    fs.writeFileSync(path.resolve(outputDir, `${outputPrefix}.html`), contentHTML);
-    return {
-      output: `${path.resolve(outputDir, `${outputPrefix}.html`)}`
-    }
-  } catch (e) {
-    throw new Error('Error converting the file to HTML');
-  }
-}
-
-export const convertToBase64 = async (pathFile: string): Promise<string> => {
-  const data = fs.readFileSync(pathFile);
-  const dataBase64 = Buffer.from(data).toString('base64');
-
-  return dataBase64
 }
