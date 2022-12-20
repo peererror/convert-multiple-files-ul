@@ -1,12 +1,13 @@
 import * as path from 'path';
 import * as child_process from 'child_process';
 
-export const convertWordFiles = async (pathFile: string, extOutput: string, outputDir: string): Promise<string> => {
+export const convertWordFiles = async (pathFile: string, extOutput: string, outputDir: string, timeoutInSeconds: string): Promise<string> => {
   const system = process.platform;
   const extension = path.extname(pathFile);
   const fileName = path.basename(pathFile, extension);
   const fullName = path.basename(pathFile);
-  const convertCommandLinux = 'timeout 6s ' + `${path.resolve(__dirname, 'utils', 'instdir', 'program', 'soffice.bin')} --headless --norestore --invisible --nodefault --nofirststartwizard --nolockcheck --nologo --convert-to ${extOutput} --outdir ${outputDir} '${pathFile}'`;
+  const timeout = castToIntWithDefault(timeoutInSeconds)
+  const convertCommandLinux = 'timeout ' + timeout + 's ' + `${path.resolve(__dirname, 'utils', 'instdir', 'program', 'soffice.bin')} --headless --norestore --invisible --nodefault --nofirststartwizard --nolockcheck --nologo --convert-to ${extOutput} --outdir ${outputDir} '${pathFile}'`;
   const convertCommandWindows = `${path.resolve(__dirname, 'utils', 'LibreOfficePortable', 'App', 'libreoffice', 'program', 'soffice.bin')} --headless --norestore --invisible --nodefault --nofirststartwizard --nolockcheck --nologo --convert-to ${extOutput} --outdir ${outputDir} "${pathFile}"`;
 
   if (!fullName.match(/\.(doc|docx|pdf|odt)$/i)) {
@@ -24,4 +25,12 @@ export const convertWordFiles = async (pathFile: string, extOutput: string, outp
   }
 
   return path.join(outputDir, `${fileName}.${extOutput}`);
+}
+
+const castToIntWithDefault = (s: string) => {
+  const value = Number(s);
+  if (isNaN(value)) {
+    return 10;
+  }
+  return value;
 }

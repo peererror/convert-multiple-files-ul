@@ -1,6 +1,6 @@
 {
   "name": "convert-multiple-files-ul",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert files to other types",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -51,5 +51,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "tar": "^6.1.0"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }
